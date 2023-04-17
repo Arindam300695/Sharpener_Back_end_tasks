@@ -10,13 +10,13 @@ const routeHandler = (req, res) => {
     });
     req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
-      const message = parsedBody.split("=")[0];
+      const message = parsedBody.split("=")[1];
       fs.writeFileSync("message.txt", message);
     });
     res.statusCode = 302;
     res.setHeader("Location", "/");
-    res.end();
-  
+    return res.end();
+  }
 
   if (url === "/") {
     const fileData = fs.readFileSync("./message.txt", "utf8");
