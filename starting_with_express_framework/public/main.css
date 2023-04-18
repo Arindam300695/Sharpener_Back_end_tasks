@@ -1,0 +1,25 @@
+#navbar {
+  display: flex;
+  background-color: aqua;
+  padding: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 2rem;
+}
+#navbar a {
+  text-decoration: none;
+  color: coral;
+  font-size: 2rem;
+  font-weight: 5rem;
+}
+#main {
+  background-color: aquamarine;
+  display: flex;
+  padding: 10rem;
+  width: 20rem;
+  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2rem purple;
+}

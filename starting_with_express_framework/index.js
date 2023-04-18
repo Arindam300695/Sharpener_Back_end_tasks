@@ -1,21 +1,24 @@
 const express = require("express");
+const path = require("path");
 const app = express();
+const rootDir = require("./util/path");
 const PORT = 4000;
 const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
+const contactRouter = require("./routes/contactus");
+const successRouter = require("./routes/success");
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(rootDir, "public")));
 app.use("/admin", adminRouter);
 app.use("/shop", shopRouter);
-app.use("/", (req, res, next) => {
-  res.status(200).send("<h1>Hello from Express!!</h1>");
+app.use("/contactus", contactRouter);
+app.use("/success", successRouter);
+app.get("/", (req, res, next) => {
+  res.status(200).sendFile(path.join(rootDir, "views", "index.html"));
 });
 app.use("*", (req, res) => {
-  res
-    .status(404)
-    .send(
-      "<div style='margin:30% auto; width:25rem; text-align:center'><h1>oops!!Page not Found</h1></div>"
-    );
+  res.status(404).sendFile(path.join(__dirname, "views", "error.html"));
 });
 app.listen(PORT, (error) => {
   if (error) console.log(error);
