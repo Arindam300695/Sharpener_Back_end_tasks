@@ -1,26 +1,22 @@
 const express = require("express");
 const app = express();
 const PORT = 4000;
+const adminRouter = require("./routes/admin");
+const shopRouter = require("./routes/shop");
 app.use(express.json());
 app.use(express.urlencoded());
-app.use("/add-product", (req, res, next) => {
-  res.send(
-    "<form action='/product' method='POST'><input type='text' name='message'/>Product Name  <input type='number' name='size'/>Product Size<button type='submit'>Send</button></form>"
-  );
-});
-app.use("/product", (req, res, next) => {
-  console.log(
-    "product name is:",
-    req.body.message,
-    "and size is:",
-    req.body.size
-  );
-  res.redirect("/");
-});
+app.use("/admin", adminRouter);
+app.use("/shop", shopRouter);
 app.use("/", (req, res, next) => {
-  res.send("<h1>Welcome to Express!</h1>");
+  res.status(200).send("<h1>Hello from Express!!</h1>");
 });
-
+app.use("*", (req, res) => {
+  res
+    .status(404)
+    .send(
+      "<div style='margin:30% auto; width:25rem; text-align:center'><h1>oops!!Page not Found</h1></div>"
+    );
+});
 app.listen(PORT, (error) => {
   if (error) console.log(error);
   else console.log(`listening on port http://localhost:${PORT}`);
